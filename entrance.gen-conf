@@ -36,6 +36,7 @@ for DESKTOP in /tmp/default.desktop /usr/share/xsessions/*.desktop \
 
 	EXEC=$(grep -E "^Exec=" $DESKTOP | sed 's/^Exec=//' | \
 		sed 's_/_\\/_g')
+	EXEC=$(which $EXEC)
 	[ -n "$EXEC" ] || ( echo "Skipping $DESKTOP !!!" >&2; continue )
 	
 	NAME="$(grep -E "^Name=" $DESKTOP | sed 's/^Name=//' | \
