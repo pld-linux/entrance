@@ -1,4 +1,5 @@
 Summary:	Enlightened display manager
+Summary(pl):	O¶wiecony zarz±dca ekranu
 Name:		entrance
 Version:	0.9.0
 %define _snap	20050106
@@ -19,7 +20,12 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 Entrance is the Enlightenment Display Manager. And like Enlightenment,
 it takes beauty and customization to levels that KDM and GDM can only
-dream about...and without the bloat.
+dream about... and without the bloat.
+
+%description -l pl
+Entrance to zarz±dca ekranu (Display Manager) dla Enlightenmenta.
+Podobnie jak Enlightenment ma piêkno i mo¿liwo¶ci konfiguracji, o
+jakich KDM czy GDM mog± tylko pomarzyæ... i to bez narzutu.
 
 %prep
 %setup -q -n %{name}
@@ -36,6 +42,7 @@ dream about...and without the bloat.
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
@@ -46,8 +53,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS COPYING* README
 %{_sysconfdir}/entrance_config.db
-#/etc/rc.d/init.d/entrance
-%{_sysconfdir}/pam.d/entrance
+#%attr(754,root,root) /etc/rc.d/init.d/entrance
+%config(noreplace) %verify(not md5 mtime size) /etc/pam.d/entrance
 %attr(755,root,root) %{_bindir}/entrance*
 %attr(755,root,root) %{_sbindir}/entranced
 %{_datadir}/%{name}
