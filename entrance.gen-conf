@@ -1,0 +1,56 @@
+#!/bin/sh
+# simple script that generates entrance config using build_config.sh.in
+# and .desktop files from /usr/share/xsessions
+
+CONFIGIN="/etc/X11/entrance/build_config.sh.in"
+CONFIGOUT="/tmp/build_config.sh"
+SESSIONS="/tmp/sessions"
+ICONDIR="/usr/share/entrance/images/sessions"
+
+die() {
+	echo "$2" >&2
+	exit $1
+}
+[ -f $CONFIGIN -a -r $CONFIGIN ] || \
+	die 1 "No config file $CONFIGIN, or not readable"
+
+[ -d /usr/share/xsessions ] || die 2 "No xsessions dir"
+
+# two common desktops
+cat << EOF > /tmp/default.desktop
+Name=Default
+Exec=default
+EOF
+cat << EOF > /tmp/failsafe.desktop
+Name=Failsafe
+Exec=failsafe
+EOF
+
+
+SESSION_SRTING="$(grep -E "^#session:" $CONFIGIN | sed 's/^#session://')"
+
+: > $SESSIONS
+NUM=0
+for DESKTOP in /tmp/default.desktop /usr/share/xsessions/*.desktop \
+	/tmp/failsafe.desktop; do
+
+	EXEC=$(grep -E "^Exec=" $DESKTOP | sed 's/^Exec=//' | \
+		sed 's_/_\\/_g')
+	[ -n "$EXEC" ] || ( echo "Skipping $DESKTOP !!!" >&2; continue )
+	
+	NAME="$(grep -E "^Name=" $DESKTOP | sed 's/^Name=//' | \
+		sed 's_/_\\/_g')"
+	[ -n $NAME ] || NAME="$EXEC"
+
+	ICON="$(basename $DESKTOP .desktop).png"
+	[ -r $ICONDIR/$ICON ] || ICON=default.png
+
+	echo "$SESSION_SRTING" | \
+		sed -e "s/@NUM@/$NUM/g" -e "s/@SESSION@/$EXEC/g" \
+		    -e "s/@TITLE@/$NAME/g" -e "s/@ICON@/$ICON/g" >> $SESSIONS
+	NUM=$(($NUM+1))
+done
+
+sed -e "s/@auth_mode@/1/" -e "s/@COUNT@/$NUM/" $CONFIGIN > $CONFIGOUT
+chmod 755 $CONFIGOUT
+exec $CONFIGOUT

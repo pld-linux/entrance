@@ -1,0 +1,64 @@
+#!/bin/sh
+#
+# entrance:	Starts the Enlighted Display Manager
+#
+# Version:	@(#) /etc/rc.d/init.d/entrance 0.1
+#
+# chkconfig:	5 95 5
+# description:	Starts and stops the Enlighted Display Manager at startup and \
+#		shutdown..
+#
+# config:	/etc/X11/entrance/build_config.sh.in
+# probe:	true
+# hide:		true
+
+. /etc/rc.d/init.d/functions
+
+# Get service config
+if [ -f /etc/sysconfig/entrance ]; then
+	. /etc/sysconfig/entrance
+fi
+
+RETVAL=0
+# See how we were called.
+case "$1" in
+  start)
+	# Check if the service is already running?
+	if [ ! -f /var/lock/subsys/entrance ]; then
+		msg_starting "Enlightened Display Manager"
+		/etc/X11/entrance/generate-config
+		if [ -r /var/lib/entrance/entrance_config.db ]; then
+			daemon /usr/sbin/entranced
+			RETVAL=$?
+			[ $RETVAL -eq 0 ] && touch /var/lock/subsys/entrance
+		else
+			fail
+		fi
+	else
+		msg_already_running "Enlightened Display Manager"
+	fi
+	;;
+  stop)
+	if [ -f /var/lock/subsys/entrance ]; then
+		msg_stopping "Enlightened Display Manager"
+		killproc entranced
+		rm -f /var/lock/subsys/entrance
+	else
+		msg_not_running "Enlightened Display Manager"
+	fi
+	;;
+  status)
+	status entranced
+	exit $?
+	;;
+  restart|force-reload)
+	$0 stop
+	$0 start
+	exit $?
+	;;
+  *)
+	msg_usage "$0 {start|stop|restart|force-reload|status}"
+	exit 3
+esac
+
+exit $RETVAL
