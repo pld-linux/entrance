@@ -34,10 +34,10 @@ NUM=0
 for DESKTOP in /tmp/default.desktop /usr/share/xsessions/*.desktop \
 	/tmp/failsafe.desktop; do
 
-	EXEC=$(grep -E "^Exec=" $DESKTOP | sed 's/^Exec=//' | \
-		sed 's_/_\\/_g')
-	EXEC=$(which $EXEC)
+	EXEC=$(grep -E "^Exec=" $DESKTOP | sed 's/^Exec=//' )
 	[ -n "$EXEC" ] || ( echo "Skipping $DESKTOP !!!" >&2; continue )
+	[ -n "$(which $EXEC 2>/dev/null)" ] && EXEC=$(which $EXEC)
+	EXEC=$(echo $EXEC | sed 's_/_\\/_g')
 	
 	NAME="$(grep -E "^Name=" $DESKTOP | sed 's/^Name=//' | \
 		sed 's_/_\\/_g')"
