@@ -67,9 +67,9 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT{%{_sysconfdir}/X11/%{name},/etc/rc.d/init.d,%{_var}/lib/%{name}}
-install -m 754 %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/entrance
-install -m 755 %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/X11/%{name}/Xsession
-install -m 755 %{SOURCE3} \
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/entrance
+install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/X11/%{name}/Xsession
+install %{SOURCE3} \
 	$RPM_BUILD_ROOT%{_sysconfdir}/X11/%{name}/generate-config
 install data/config/build_config.sh.in \
 	$RPM_BUILD_ROOT%{_sysconfdir}/X11/%{name}/
