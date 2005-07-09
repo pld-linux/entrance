@@ -1,14 +1,14 @@
 Summary:	Enlightened display manager
 Summary(pl):	O¶wiecony zarz±dca ekranu
 Name:		entrance
-Version:	0.9.0
-%define _snap	20050106
-Release:	0.%{_snap}.0.5
+Version:	0.9.0.003
+%define _snap	20050707
+Release:	0.%{_snap}.0.2
 License:	BSD
 Group:		X11/Applications
 #Source0:	http://dl.sourceforge.net/enlightenment/%{name}-%{version}.tar.gz
-Source0:	ftp://ftp.sparky.homelinux.org/pub/e17/%{name}-%{version}-%{_snap}.tar.gz
-# Source0-md5:	22bd32b41c655089ae9a1591da462a01
+Source0:	ftp://ftp.sparky.homelinux.org/snaps/enli/e17/apps/%{name}-%{_snap}.tar.gz
+# Source0-md5:	4f1747d588dcb4ed1f0f613966519ca4
 Source1:	%{name}.init
 Source2:	%{name}.Xsession
 Source3:	%{name}.gen-conf
@@ -20,6 +20,7 @@ BuildRequires:	esmart-devel
 BuildRequires:	libtool
 BuildRequires:	pam-devel
 BuildRequires:	sed >= 4.0
+Requires:	/bin/bash
 Requires(post,preun):	/sbin/chkconfig
 Requires:	pam
 Requires:	sessreg
@@ -49,6 +50,8 @@ sed '/PACKAGE_CFG_DIR/s@"${sysconfdir}"@"${localstatedir}/lib/${PACKAGE}"@' \
 	-i configure.in
 sed -n '/xsession="You should reconfigure --with-xsession"/!p' \
 	-i configure.in
+sed 's|/bin/sh|/bin/bash|g' \
+	-i src/daemon/spawner.c
 
 %build
 %{__libtoolize}
