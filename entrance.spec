@@ -7,7 +7,7 @@ Release:	0.%{_snap}.0.2
 License:	BSD
 Group:		X11/Applications
 #Source0:	http://dl.sourceforge.net/enlightenment/%{name}-%{version}.tar.gz
-Source0:	ftp://ftp.sparky.homelinux.org/snaps/enli/e17/apps/%{name}-%{_snap}.tar.gz
+Source0:	http://sparky.homelinux.org/snaps/enli/e17/apps/%{name}-%{_snap}.tar.gz
 # Source0-md5:	4f1747d588dcb4ed1f0f613966519ca4
 Source1:	%{name}.init
 Source2:	%{name}.Xsession
