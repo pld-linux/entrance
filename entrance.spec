@@ -24,6 +24,7 @@ BuildRequires:	sed >= 4.0
 Requires:	/bin/bash
 Requires(post,preun):	/sbin/chkconfig
 Requires:	ecore
+Requires:	%{name}-theme
 Requires:	pam
 Requires:	sessreg
 Requires:	xinitrc-ng
@@ -44,9 +45,48 @@ Entrance to zarz±dca ekranu (Display Manager) dla Enlightenmenta.
 Podobnie jak Enlightenment ma piêkno i mo¿liwo¶ci konfiguracji, o
 jakich KDM czy GDM mog± tylko pomarzyæ... i to bez narzutu.
 
+%package theme-default
+Summary:	Default Entrance theme
+Group:		X11/Applications
+Requires:	%{name}
+Provides:	%{name}-theme
+
+%description theme-default
+Default Entrance theme.
+
+%package theme-Nebulous
+Summary:	Nebulous Entrance theme
+Group:		X11/Applications
+Requires:	%{name}
+Provides:	%{name}-theme
+
+%description theme-Nebulous
+Nebulous Entrance theme.
+
+%package theme-darkrock
+Summary:	Darkrock Entrance theme
+Group:		X11/Applications
+Requires:	%{name}
+Provides:	%{name}-theme
+
+%description theme-darkrock
+Darkrock Entrance theme.
+
+%package theme-taillights
+Summary:	Taillights Entrance theme
+Group:		X11/Applications
+Requires:	%{name}
+Provides:	%{name}-theme
+
+%description theme-taillights
+Taillights Entrance theme.
+
 %prep
 %setup -q -n %{name}
 %patch0 -p1
+mv data/images/sessions/enlightenment{,DR17}.png
+sed 's/enlightenment.png/enlightenmentDR17.png/' \
+	-i data/images/sessions/Makefile.am
 
 sed '/PACKAGE_CFG_DIR/s@"${sysconfdir}"@"${localstatedir}/lib/${PACKAGE}"@' \
 	-i configure.in
@@ -78,7 +118,7 @@ install %{SOURCE3} \
 	$RPM_BUILD_ROOT%{_sysconfdir}/X11/%{name}/generate-config
 install data/config/build_config.sh.in \
 	$RPM_BUILD_ROOT%{_sysconfdir}/X11/%{name}/
-touch $RPM_BUILD_ROOT%{_var}/lib/%{name}/entrance_config.db
+touch $RPM_BUILD_ROOT%{_var}/lib/%{name}/entrance_config.cfg
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -106,10 +146,29 @@ fi
 %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/entrance
 %attr(755,root,root) %{_bindir}/entrance*
 %attr(755,root,root) %{_sbindir}/entranced
-%{_datadir}/%{name}
+%dir %{_datadir}/%{name}
+%{_datadir}/%{name}/images
+%dir %{_datadir}/%{name}/themes
+%{_datadir}/%{name}/users
 %dir %{_sysconfdir}/X11/%{name}
 %attr(755,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/X11/%{name}/Xsession
 %attr(755,root,root) %{_sysconfdir}/X11/%{name}/generate-config
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/X11/%{name}/build_config.sh.in
 %dir %{_var}/lib/%{name}
-%ghost %{_var}/lib/%{name}/entrance_config.db
+%ghost %{_var}/lib/%{name}/entrance_config.cfg
+
+%files theme-default
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/themes/default.edj
+
+%files theme-Nebulous
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/themes/Nebulous.edj
+
+%files theme-darkrock
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/themes/darkrock.edj
+
+%files theme-taillights
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/themes/taillights.edj
