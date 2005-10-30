@@ -52,39 +52,55 @@ jakich KDM czy GDM mog± tylko pomarzyæ... i to bez narzutu.
 
 %package theme-default
 Summary:	Default Entrance theme
+Summary(pl):	Domy¶lny motyw Entrance
 Group:		X11/Applications
-Requires:	%{name}
+Requires:	%{name} = %{version}-%{release}
 Provides:	%{name}-theme
 
 %description theme-default
 Default Entrance theme.
 
+%description theme-default -l pl
+Domy¶lny motyw Entrance.
+
 %package theme-Nebulous
 Summary:	Nebulous Entrance theme
+Summary(pl):	Motyw Entrance Nebulous
 Group:		X11/Applications
-Requires:	%{name}
+Requires:	%{name} = %{version}-%{release}
 Provides:	%{name}-theme
 
 %description theme-Nebulous
 Nebulous Entrance theme.
 
+%description theme-Nebulous -l pl
+Motyw Entrance Nebulous.
+
 %package theme-darkrock
 Summary:	Darkrock Entrance theme
+Summary(pl):	Motyw Entrance Darkrock
 Group:		X11/Applications
-Requires:	%{name}
+Requires:	%{name} = %{version}-%{release}
 Provides:	%{name}-theme
 
 %description theme-darkrock
 Darkrock Entrance theme.
 
+%description theme-darkrock -l pl
+Motyw Entrance Darkrock.
+
 %package theme-taillights
 Summary:	Taillights Entrance theme
+Summary(pl):	Motyw Entrance Taillights
 Group:		X11/Applications
-Requires:	%{name}
+Requires:	%{name} = %{version}-%{release}
 Provides:	%{name}-theme
 
 %description theme-taillights
 Taillights Entrance theme.
+
+%description theme-taillights -l pl
+Motyw Entrance Taillights.
 
 %prep
 %setup -q -n %{name}
