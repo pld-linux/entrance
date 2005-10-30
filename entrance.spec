@@ -2,11 +2,13 @@ Summary:	Enlightened display manager
 Summary(pl):	O¶wiecony zarz±dca ekranu
 Name:		entrance
 Version:	0.9.0.004
-Release:	1
+%define	_snap	20051029
+Release:	1.%{_snap}.1
 License:	BSD
 Group:		X11/Applications
-Source0:	http://enlightenment.freedesktop.org/files/%{name}-%{version}.tar.gz
-# Source0-md5:	48d8999a5be31e4b089e0faf40bf9fd9
+#Source0:	http://enlightenment.freedesktop.org/files/%{name}-%{version}.tar.gz
+Source0:	http://sparky.homelinux.org/snaps/enli/e17/apps/%{name}-%{_snap}.tar.bz2
+# Source0-md5:	6d98baf539649abbe3124a02574fe87f
 Source1:	%{name}.init
 Source2:	%{name}.Xsession
 Source3:	%{name}.gen-conf
@@ -14,12 +16,14 @@ Patch0:		%{name}-conf.in.patch
 URL:		http://enlightenment.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	edje
 BuildRequires:	esmart-devel
 BuildRequires:	libtool
 BuildRequires:	pam-devel
 BuildRequires:	sed >= 4.0
 Requires:	/bin/bash
 Requires(post,preun):	/sbin/chkconfig
+Requires:	ecore
 Requires:	pam
 Requires:	sessreg
 Requires:	xinitrc-ng
@@ -41,7 +45,7 @@ Podobnie jak Enlightenment ma piêkno i mo¿liwo¶ci konfiguracji, o
 jakich KDM czy GDM mog± tylko pomarzyæ... i to bez narzutu.
 
 %prep
-%setup -q
+%setup -q -n %{name}
 %patch0 -p1
 
 sed '/PACKAGE_CFG_DIR/s@"${sysconfdir}"@"${localstatedir}/lib/${PACKAGE}"@' \
@@ -53,7 +57,7 @@ sed 's|/bin/sh|/bin/bash|g' \
 
 %build
 %{__libtoolize}
-%{__aclocal}
+%{__aclocal} -I m4
 %{__autoconf}
 %{__autoheader}
 %{__automake}
