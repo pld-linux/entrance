@@ -1,3 +1,8 @@
+#
+# TODO:
+#  - when WM finishes to load entrance process fork's (or simply finishes)
+#    so entranced thinks session has finished and restarts login greeter
+#
 Summary:	Enlightened display manager
 Summary(pl):	O¶wiecony zarz±dca ekranu
 Name:		entrance
