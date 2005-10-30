@@ -27,7 +27,7 @@ case "$1" in
 	if [ ! -f /var/lock/subsys/entrance ]; then
 		msg_starting "Enlightened Display Manager"
 		/etc/X11/entrance/generate-config
-		if [ -r /var/lib/entrance/entrance_config.db ]; then
+		if [ -r /var/lib/entrance/entrance_config.cfg ]; then
 			daemon /usr/sbin/entranced
 			RETVAL=$?
 			[ $RETVAL -eq 0 ] && touch /var/lock/subsys/entrance
