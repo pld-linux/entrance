@@ -41,7 +41,7 @@ for DESKTOP in /tmp/default.desktop /usr/share/xsessions/*.desktop \
 	
 	NAME="$(grep -E "^Name=" $DESKTOP | sed 's/^Name=//' | \
 		sed 's_/_\\/_g')"
-	[ -n $NAME ] || NAME="$EXEC"
+	[ -n "$NAME" ] || NAME="$EXEC"
 
 	ICON="$(basename $DESKTOP .desktop).png"
 	[ -r $ICONDIR/$ICON ] || ICON=default.png
