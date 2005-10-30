@@ -6,6 +6,7 @@ CONFIGIN="/etc/X11/entrance/build_config.sh.in"
 CONFIGOUT="/tmp/build_config.sh"
 SESSIONS="/tmp/sessions"
 ICONDIR="/usr/share/entrance/images/sessions"
+THEMEDIR="/usr/share/entrance/themes"
 
 die() {
 	echo "$2" >&2
@@ -52,6 +53,14 @@ for DESKTOP in /tmp/default.desktop /usr/share/xsessions/*.desktop \
 	NUM=$(($NUM+1))
 done
 
-sed -e "s/@auth_mode@/1/" -e "s/@COUNT@/$NUM/" $CONFIGIN > $CONFIGOUT
+THEME=$(grep entrance/theme $CONFIGIN | sed 's/.*\s//; s/"//g')
+OLDT=
+NEWT=
+if ! [ -r $THEMEDIR/$THEME ]; then
+	OLDT=$(grep entrance/theme $CONFIGIN | sed 's/.*\s//')
+	NEWT=$(ls $THEMEDIR | head -n 1)	
+fi
+
+sed -e "s/@auth_mode@/1/" -e "s/@COUNT@/$NUM/" -e "s/$OLDT/$NEWT/" $CONFIGIN > $CONFIGOUT
 chmod 755 $CONFIGOUT
 exec $CONFIGOUT
