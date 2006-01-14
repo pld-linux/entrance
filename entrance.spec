@@ -6,24 +6,25 @@
 Summary:	Enlightened display manager
 Summary(pl):	O¶wiecony zarz±dca ekranu
 Name:		entrance
-Version:	0.9.0.004
-%define	_snap	20051029
-Release:	1.%{_snap}.1
+Version:	0.9.0.005
+#%define	_snap	20051029
+Release:	1
+#.%{_snap}.1
 License:	BSD
 Group:		X11/Applications
-#Source0:	http://enlightenment.freedesktop.org/files/%{name}-%{version}.tar.gz
-Source0:	http://sparky.homelinux.org/snaps/enli/e17/apps/%{name}-%{_snap}.tar.bz2
-# Source0-md5:	6d98baf539649abbe3124a02574fe87f
+Source0:	http://enlightenment.freedesktop.org/files/%{name}-%{version}.tar.gz
+# Source0-md5:	8a82513dea054bae7e12c0c6b981cb59
+#Source0:	http://sparky.homelinux.org/snaps/enli/e17/apps/%{name}-%{_snap}.tar.bz2
 Source1:	%{name}.init
 Source2:	%{name}.Xsession
 Source3:	%{name}.gen-conf
 Patch0:		%{name}-conf.in.patch
 URL:		http://enlightenment.org/
-BuildRequires:	autoconf
-BuildRequires:	automake
+#BuildRequires:	autoconf
+#BuildRequires:	automake
 BuildRequires:	edje
 BuildRequires:	esmart-devel
-BuildRequires:	libtool
+#BuildRequires:	libtool
 BuildRequires:	pam-devel
 BuildRequires:	sed >= 4.0
 Requires:	/bin/bash
@@ -103,9 +104,10 @@ Taillights Entrance theme.
 Motyw Entrance Taillights.
 
 %prep
-%setup -q -n %{name}
+%setup -q
+# -n %{name}
 %patch0 -p1
-mv data/images/sessions/enlightenment{,DR17}.png
+cp -a data/images/sessions/enlightenment{,DR17}.png
 sed 's/enlightenment.png/enlightenmentDR17.png/' \
 	-i data/images/sessions/Makefile.am
 
@@ -117,11 +119,11 @@ sed 's|/bin/sh|/bin/bash|g' \
 	-i src/daemon/spawner.c
 
 %build
-%{__libtoolize}
-%{__aclocal} -I m4
-%{__autoconf}
-%{__autoheader}
-%{__automake}
+#%%{__libtoolize}
+#%%{__aclocal} -I m4
+#%%{__autoconf}
+#%%{__autoheader}
+#%%{__automake}
 %configure \
 	--with-xsession=%{_sysconfdir}/X11/%{name}/Xsession
 %{__make}
