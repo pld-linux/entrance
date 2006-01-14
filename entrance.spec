@@ -20,11 +20,11 @@ Source2:	%{name}.Xsession
 Source3:	%{name}.gen-conf
 Patch0:		%{name}-conf.in.patch
 URL:		http://enlightenment.org/
-#BuildRequires:	autoconf
-#BuildRequires:	automake
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	edje
 BuildRequires:	esmart-devel
-#BuildRequires:	libtool
+BuildRequires:	libtool
 BuildRequires:	pam-devel
 BuildRequires:	sed >= 4.0
 Requires:	/bin/bash
@@ -107,7 +107,7 @@ Motyw Entrance Taillights.
 %setup -q
 # -n %{name}
 %patch0 -p1
-cp -a data/images/sessions/enlightenment{,DR17}.png
+mv data/images/sessions/enlightenment{,DR17}.png
 sed 's/enlightenment.png/enlightenmentDR17.png/' \
 	-i data/images/sessions/Makefile.am
 
@@ -119,11 +119,11 @@ sed 's|/bin/sh|/bin/bash|g' \
 	-i src/daemon/spawner.c
 
 %build
-#%%{__libtoolize}
-#%%{__aclocal} -I m4
-#%%{__autoconf}
-#%%{__autoheader}
-#%%{__automake}
+%{__libtoolize}
+%{__aclocal} -I m4
+%{__autoconf}
+%{__autoheader}
+%{__automake}
 %configure \
 	--with-xsession=%{_sysconfdir}/X11/%{name}/Xsession
 %{__make}
