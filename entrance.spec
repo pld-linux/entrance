@@ -19,6 +19,7 @@ Source1:	%{name}.init
 Source2:	%{name}.Xsession
 Source3:	%{name}.gen-conf
 Patch0:		%{name}-conf.in.patch
+Patch1:		%{name}-use_bash.patch
 URL:		http://enlightenment.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -107,6 +108,7 @@ Motyw Entrance Taillights.
 %setup -q
 # -n %{name}
 %patch0 -p1
+%patch1 -p1
 mv data/images/sessions/enlightenment{,DR17}.png
 sed 's/enlightenment.png/enlightenmentDR17.png/' \
 	-i data/images/sessions/Makefile.am
@@ -115,8 +117,6 @@ sed '/PACKAGE_CFG_DIR/s@"${sysconfdir}"@"${localstatedir}/lib/${PACKAGE}"@' \
 	-i configure.in
 sed -n '/xsession="You should reconfigure --with-xsession"/!p' \
 	-i configure.in
-sed 's|/bin/sh|/bin/bash|g' \
-	-i src/daemon/spawner.c
 
 %build
 %{__libtoolize}
