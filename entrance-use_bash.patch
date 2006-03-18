@@ -1,0 +1,33 @@
+diff -Nur entrance-0.9.0.006/src/client/entrance_session.c entrance-0.9.0.006.bash/src/client/entrance_session.c
+--- entrance-0.9.0.006/src/client/entrance_session.c	2006-01-24 04:45:27.000000000 +0100
++++ entrance-0.9.0.006.bash/src/client/entrance_session.c	2006-03-18 20:03:58.000000000 +0100
+@@ -480,7 +480,7 @@
+            snprintf(buf, sizeof(buf), "%s/entrance_login %i", PACKAGE_BIN_DIR,
+                     (int) pid);
+         }
+-        shell = strdup("/bin/sh");
++        shell = strdup("/bin/bash");
+         /* this bypasses a race condition where entrance loses its x
+            connection before the wm gets it and x goes and resets itself */
+         sleep(10);
+@@ -495,7 +495,7 @@
+    entrance_session_free(e);
+    /* replace this process with a clean small one that just waits for its */
+    /* child to exit.. passed on the cmd-line */
+-   execl("/bin/sh", "/bin/sh", "-l", "-c", buf, NULL);
++   execl("/bin/bash", "/bin/bash", "-l", "-c", buf, NULL);
+ }
+ 
+ 
+diff -Nur entrance-0.9.0.006/src/daemon/spawner.c entrance-0.9.0.006.bash/src/daemon/spawner.c
+--- entrance-0.9.0.006/src/daemon/spawner.c	2006-01-24 04:45:27.000000000 +0100
++++ entrance-0.9.0.006.bash/src/daemon/spawner.c	2006-03-18 20:02:18.000000000 +0100
+@@ -162,7 +162,7 @@
+         sigaction(SIGUSR1, &_entrance_x_sa, NULL);
+       /* FIXME: need to parse command and NOT go thru /bin/sh!!!! */
+       /* why? some /bin/sh's wont pass on this SIGUSR1 thing... */
+-        execl("/bin/sh", "/bin/sh", "-c", x_cmd, NULL);
++        execl("/bin/bash", "/bin/bash", "-c", x_cmd, NULL);
+         syslog(LOG_WARNING, "Could not execute X server.");
+         exit(1);
+      default:
