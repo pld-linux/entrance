@@ -6,14 +6,14 @@
 Summary:	Enlightened display manager
 Summary(pl):	O¶wiecony zarz±dca ekranu
 Name:		entrance
-Version:	0.9.0.006
+Version:	0.9.0.007
 #%define	_snap	20060307
 Release:	1
 #.%{_snap}.1
 License:	BSD
 Group:		X11/Applications
 Source0:	http://enlightenment.freedesktop.org/files/%{name}-%{version}.tar.gz
-# Source0-md5:	2ab6fd57f495df28a12731e98d123fc3
+# Source0-md5:	b789d09fa76e76a6466a786f0628d0ff
 #Source0:	http://sparky.homelinux.org/snaps/enli/e17/apps/%{name}-%{_snap}.tar.bz2
 Source1:	%{name}.init
 Source2:	%{name}.Xsession
