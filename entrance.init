@@ -4,7 +4,7 @@
 #
 # Version:	@(#) /etc/rc.d/init.d/entrance 0.1
 #
-# chkconfig:	5 95 5
+# chkconfig:	5 99 1
 # description:	Starts and stops the Enlighted Display Manager at startup and \
 #		shutdown..
 #
