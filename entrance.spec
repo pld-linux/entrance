@@ -1,20 +1,13 @@
 #
-# TODO:
-#  - when WM finishes to load entrance process fork's (or simply finishes)
-#    so entranced thinks session has finished and restarts login greeter
-#
 Summary:	Enlightened display manager
 Summary(pl):	O¶wiecony zarz±dca ekranu
 Name:		entrance
 Version:	0.9.0.007
-#%define	_snap	20060307
 Release:	1
-#.%{_snap}.1
 License:	BSD
 Group:		X11/Applications
 Source0:	http://enlightenment.freedesktop.org/files/%{name}-%{version}.tar.gz
 # Source0-md5:	b789d09fa76e76a6466a786f0628d0ff
-#Source0:	http://sparky.homelinux.org/snaps/enli/e17/apps/%{name}-%{_snap}.tar.bz2
 Source1:	%{name}.init
 Source2:	%{name}.Xsession
 Source3:	%{name}.gen-conf
