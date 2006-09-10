@@ -21,10 +21,12 @@ BuildRequires:	esmart-devel
 BuildRequires:	libtool
 BuildRequires:	pam-devel
 BuildRequires:	sed >= 4.0
+Requires:	%{name}-theme
 Requires:	/bin/bash
 Requires(post,preun):	/sbin/chkconfig
 Requires:	ecore
-Requires:	%{name}-theme
+Requires:	evas-engine-software_x11
+Requires:	evas-loader-eet
 Requires:	pam
 Requires:	sessreg
 Requires:	xinitrc-ng
