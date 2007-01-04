@@ -3,7 +3,7 @@ Summary:	Enlightened display manager
 Summary(pl):	O¶wiecony zarz±dca ekranu
 Name:		entrance
 Version:	0.9.0.007
-Release:	1
+Release:	2
 License:	BSD
 Group:		X11/Applications
 Source0:	http://enlightenment.freedesktop.org/files/%{name}-%{version}.tar.gz
@@ -18,6 +18,7 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	edje
 BuildRequires:	esmart-devel
+BuildRequires:	evas-loader-jpeg
 BuildRequires:	libtool
 BuildRequires:	pam-devel
 BuildRequires:	sed >= 4.0
