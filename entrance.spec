@@ -1,6 +1,6 @@
 #
 Summary:	Enlightened display manager
-Summary(pl):	O¶wiecony zarz±dca ekranu
+Summary(pl.UTF-8):   OÅ›wiecony zarzÄ…dca ekranu
 Name:		entrance
 Version:	0.9.0.007
 Release:	2
@@ -43,14 +43,14 @@ Entrance is the Enlightenment Display Manager. And like Enlightenment,
 it takes beauty and customization to levels that KDM and GDM can only
 dream about... and without the bloat.
 
-%description -l pl
-Entrance to zarz±dca ekranu (Display Manager) dla Enlightenmenta.
-Podobnie jak Enlightenment ma piêkno i mo¿liwo¶ci konfiguracji, o
-jakich KDM czy GDM mog± tylko pomarzyæ... i to bez narzutu.
+%description -l pl.UTF-8
+Entrance to zarzÄ…dca ekranu (Display Manager) dla Enlightenmenta.
+Podobnie jak Enlightenment ma piÄ™kno i moÅ¼liwoÅ›ci konfiguracji, o
+jakich KDM czy GDM mogÄ… tylko pomarzyÄ‡... i to bez narzutu.
 
 %package theme-default
 Summary:	Default Entrance theme
-Summary(pl):	Domy¶lny motyw Entrance
+Summary(pl.UTF-8):   DomyÅ›lny motyw Entrance
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 Provides:	%{name}-theme
@@ -58,12 +58,12 @@ Provides:	%{name}-theme
 %description theme-default
 Default Entrance theme.
 
-%description theme-default -l pl
-Domy¶lny motyw Entrance.
+%description theme-default -l pl.UTF-8
+DomyÅ›lny motyw Entrance.
 
 %package theme-Nebulous
 Summary:	Nebulous Entrance theme
-Summary(pl):	Motyw Entrance Nebulous
+Summary(pl.UTF-8):   Motyw Entrance Nebulous
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 Provides:	%{name}-theme
@@ -71,12 +71,12 @@ Provides:	%{name}-theme
 %description theme-Nebulous
 Nebulous Entrance theme.
 
-%description theme-Nebulous -l pl
+%description theme-Nebulous -l pl.UTF-8
 Motyw Entrance Nebulous.
 
 %package theme-darkrock
 Summary:	Darkrock Entrance theme
-Summary(pl):	Motyw Entrance Darkrock
+Summary(pl.UTF-8):   Motyw Entrance Darkrock
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 Provides:	%{name}-theme
@@ -84,12 +84,12 @@ Provides:	%{name}-theme
 %description theme-darkrock
 Darkrock Entrance theme.
 
-%description theme-darkrock -l pl
+%description theme-darkrock -l pl.UTF-8
 Motyw Entrance Darkrock.
 
 %package theme-taillights
 Summary:	Taillights Entrance theme
-Summary(pl):	Motyw Entrance Taillights
+Summary(pl.UTF-8):   Motyw Entrance Taillights
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 Provides:	%{name}-theme
@@ -97,7 +97,7 @@ Provides:	%{name}-theme
 %description theme-taillights
 Taillights Entrance theme.
 
-%description theme-taillights -l pl
+%description theme-taillights -l pl.UTF-8
 Motyw Entrance Taillights.
 
 %prep
