@@ -1,6 +1,6 @@
 #
 Summary:	Enlightened display manager
-Summary(pl.UTF-8):   Oświecony zarządca ekranu
+Summary(pl.UTF-8):	Oświecony zarządca ekranu
 Name:		entrance
 Version:	0.9.0.007
 Release:	2
@@ -50,7 +50,7 @@ jakich KDM czy GDM mogą tylko pomarzyć... i to bez narzutu.
 
 %package theme-default
 Summary:	Default Entrance theme
-Summary(pl.UTF-8):   Domyślny motyw Entrance
+Summary(pl.UTF-8):	Domyślny motyw Entrance
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 Provides:	%{name}-theme
@@ -63,7 +63,7 @@ Domyślny motyw Entrance.
 
 %package theme-Nebulous
 Summary:	Nebulous Entrance theme
-Summary(pl.UTF-8):   Motyw Entrance Nebulous
+Summary(pl.UTF-8):	Motyw Entrance Nebulous
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 Provides:	%{name}-theme
@@ -76,7 +76,7 @@ Motyw Entrance Nebulous.
 
 %package theme-darkrock
 Summary:	Darkrock Entrance theme
-Summary(pl.UTF-8):   Motyw Entrance Darkrock
+Summary(pl.UTF-8):	Motyw Entrance Darkrock
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 Provides:	%{name}-theme
@@ -89,7 +89,7 @@ Motyw Entrance Darkrock.
 
 %package theme-taillights
 Summary:	Taillights Entrance theme
-Summary(pl.UTF-8):   Motyw Entrance Taillights
+Summary(pl.UTF-8):	Motyw Entrance Taillights
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 Provides:	%{name}-theme
