@@ -1,26 +1,45 @@
---- entrance/data/config/build_config.sh.in	2004-04-11 00:23:16.000000000 +0200
-+++ entrance/data/config/build_config.sh.in.new	2005-01-08 15:49:36.768610184 +0100
-@@ -1,5 +1,5 @@
- #!/bin/sh -e
+--- entrance-0.9.0.009/data/config/build_config.sh.in.orig	2006-09-05 02:36:29.000000000 +0200
++++ entrance-0.9.0.009/data/config/build_config.sh.in	2007-09-09 18:35:23.325602997 +0200
+@@ -19,7 +19,7 @@
+ }
+ 
+ SESSION_DIR=""
 -DB="./entrance_config.cfg"
 +DB="/var/lib/entrance/entrance_config.cfg"
- rm -f $DB
  
- # set auth to 1 for pam, 2 for shadow
-@@ -19,6 +19,8 @@
- #ecore_config -c $DB -k /entrance/fonts/1/-s -s "/usr/X11R6/lib/X11/fonts/Truetype/"
+ while [ -n "$1" ] ; do
+ 	case $1 in
+@@ -61,10 +61,10 @@
  ecore_config -c $DB -k /entrance/greeting/before -s "Welcome to"
  ecore_config -c $DB -k /entrance/greeting/after -s ""
-+
-+dont_run() {
- ecore_config -c $DB -k /entrance/session/count -i 7
- ecore_config -c $DB -k /entrance/session/0/session -s "default"
- ecore_config -c $DB -k /entrance/session/0/title -s "Default"
-@@ -41,6 +43,23 @@
- ecore_config -c $DB -k /entrance/session/6/session -s "failsafe"
- ecore_config -c $DB -k /entrance/session/6/title -s "Failsafe"
- ecore_config -c $DB -k /entrance/session/6/icon -s "failsafe.png"
-+}
+ 
+-count=0
+-ecore_config -c $DB -k /entrance/session/0/session -s "default"
+-ecore_config -c $DB -k /entrance/session/0/title -s "Default"
+-ecore_config -c $DB -k /entrance/session/0/icon -s "default.png"
++#count=0
++#ecore_config -c $DB -k /entrance/session/0/session -s "default"
++#ecore_config -c $DB -k /entrance/session/0/title -s "Default"
++#ecore_config -c $DB -k /entrance/session/0/icon -s "default.png"
+ #if [ -z "$SESSION_DIR" ] ; then
+ #	count=`(expr $count + 6)`
+ #	ecore_config -c $DB -k /entrance/session/1/session -s "@prefix@/bin/enlightenment"
+@@ -91,12 +91,27 @@
+ #		ecore_config -c $DB -k /entrance/session/$count/icon -s "$s.png"
+ #	done
+ #fi
+-count=`(expr $count + 1)`
+-ecore_config -c $DB -k /entrance/session/$count/session -s "failsafe"
+-ecore_config -c $DB -k /entrance/session/$count/title -s "Failsafe"
+-ecore_config -c $DB -k /entrance/session/$count/icon -s "failsafe.png"
+-count=`(expr $count + 1)`
+-ecore_config -c $DB -k /entrance/session/count -i $count
++#count=`(expr $count + 1)`
++#ecore_config -c $DB -k /entrance/session/$count/session -s "failsafe"
++#ecore_config -c $DB -k /entrance/session/$count/title -s "Failsafe"
++#ecore_config -c $DB -k /entrance/session/$count/icon -s "failsafe.png"
++#count=`(expr $count + 1)`
++#ecore_config -c $DB -k /entrance/session/count -i $count
 +
 +ecore_config -c $DB -k /entrance/session/count -i @COUNT@
 +# lines starting with ^#session: will be parsed for each .desktop file
@@ -35,25 +54,13 @@
 +#session:ecore_config -c $DB -k /entrance/session/@NUM@/title -s "@TITLE@"
 +#session:ecore_config -c $DB -k /entrance/session/@NUM@/icon -s "@ICON@"
 +
-+. /tmp/sessions
-+
++. /var/lib/entrance/sessions
+ 
  ecore_config -c $DB -k /entrance/system/reboot -i 1
  ecore_config -c $DB -k /entrance/system/halt -i 1
- ecore_config -c $DB -k /entrance/user/remember -i 1
 --- entrance/data/Makefile.am	2003-10-22 13:29:59.000000000 +0200
 +++ entrance/data/Makefile.am.new	2005-01-08 15:50:12.962107936 +0100
 @@ -1,2 +1,2 @@
 -SUBDIRS = config images themes fonts users
 +SUBDIRS = images themes fonts users
 
---- entrance-0.9.0.005/data/Makefile.in~	2006-01-14 19:13:50.000000000 +0000
-+++ entrance-0.9.0.005/data/Makefile.in	2006-01-14 19:17:52.000000000 +0000
-@@ -123,7 +123,7 @@
- sysconfdir = @sysconfdir@
- target_alias = @target_alias@
- xsession = @xsession@
--SUBDIRS = config images themes fonts users
-+SUBDIRS = images themes fonts users
- subdir = data
- ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
- mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
