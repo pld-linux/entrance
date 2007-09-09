@@ -1,41 +1,44 @@
-#
 Summary:	Enlightened display manager
 Summary(pl.UTF-8):	Oświecony zarządca ekranu
 Name:		entrance
-Version:	0.9.0.007
-Release:	2
+Version:	0.9.0.009
+Release:	1
 License:	BSD
 Group:		X11/Applications
 Source0:	http://enlightenment.freedesktop.org/files/%{name}-%{version}.tar.gz
-# Source0-md5:	b789d09fa76e76a6466a786f0628d0ff
+# Source0-md5:	0e3f4d6830431ab7ea4e862c3585fbd0
 Source1:	%{name}.init
 Source2:	%{name}.Xsession
 Source3:	%{name}.gen-conf
 Patch0:		%{name}-conf.in.patch
 Patch1:		%{name}-use_bash.patch
 URL:		http://enlightenment.org/
-BuildRequires:	autoconf
-BuildRequires:	automake
-BuildRequires:	edje
-BuildRequires:	esmart-devel
-BuildRequires:	evas-loader-jpeg
+BuildRequires:	autoconf >= 2.59-9
+BuildRequires:	automake >= 1.4
+# ecore-evas ecore-file ecore-ipc ecore-config ecore-desktop
+BuildRequires:	ecore-devel >= 0.9.9.038
+BuildRequires:	edje >= 0.5.0.038
+BuildRequires:	edje-devel >= 0.5.0.038
+BuildRequires:	esmart-devel >= 0.9.0.008
+BuildRequires:	evas-devel >= 0.9.9.038
+BuildRequires:	evas-loader-jpeg >= 0.9.9.038
 BuildRequires:	libtool
 BuildRequires:	pam-devel
 BuildRequires:	sed >= 4.0
-Requires:	%{name}-theme
-Requires:	/bin/bash
 Requires(post,preun):	/sbin/chkconfig
-Requires:	ecore
-Requires:	evas-engine-software_x11
-Requires:	evas-loader-eet
+Requires:	%{name}-libs = %{version}-%{release}
+Requires:	%{name}-theme
+#Requires:	/bin/bash
+Requires:	ecore >= 0.9.9.038
+Requires:	evas-engine-software_x11 >= 0.9.9.038
+Requires:	evas-loader-eet >= 0.9.9.038
 Requires:	pam
 Requires:	sessreg
 Requires:	xinitrc-ng
-Obsoletes:	X11-xdm
-Obsoletes:	kdm
-Obsoletes:	gdm
-Obsoletes:	wdm
-Obsoletes:	xdm
+Provides:	XDM
+# disappeared from 0.9.0.009
+Obsoletes:	entrance-theme-Nebulous < 0.9.0.009
+Obsoletes:	entrance-theme-taillights < 0.9.0.009
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -47,6 +50,48 @@ dream about... and without the bloat.
 Entrance to zarządca ekranu (Display Manager) dla Enlightenmenta.
 Podobnie jak Enlightenment ma piękno i możliwości konfiguracji, o
 jakich KDM czy GDM mogą tylko pomarzyć... i to bez narzutu.
+
+%package libs
+Summary:	Entrance library
+Summary(pl.UTF-8):	Biblioteka Entrance
+Group:		X11/Libraries
+Requires:	ecore-config >= 0.9.9.038
+Requires:	ecore-desktop >= 0.9.9.038
+Requires:	ecore-evas >= 0.9.9.038
+Requires:	ecore-file >= 0.9.9.038
+Requires:	ecore-ipc >= 0.9.9.038
+
+%description libs
+Entrance library.
+
+%description libs -l pl.UTF-8
+Biblioteka Entrance.
+
+%package devel
+Summary:	Header file for Entrance library
+Summary(pl.UTF-8):	Plik nagłówkowy biblioteki Entrance
+Group:		X11/Development/Libraries
+Requires:	%{name}-libs = %{version}-%{release}
+# ecore-evas ecore-file ecore-ipc ecore-config ecore-desktop
+Requires:	ecore-devel >= 0.9.9.038
+
+%description devel
+Header file for Entrance library.
+
+%description devel -l pl.UTF-8
+Plik nagłówkowy biblioteki Entrance.
+
+%package static
+Summary:	Static Entrance library
+Summary(pl.UTF-8):	Statyczna biblioteka Entrance
+Group:		X11/Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+
+%description static
+Static Entrance library.
+
+%description static -l pl.UTF-8
+Statyczna biblioteka Entrance.
 
 %package theme-default
 Summary:	Default Entrance theme
@@ -61,19 +106,6 @@ Default Entrance theme.
 %description theme-default -l pl.UTF-8
 Domyślny motyw Entrance.
 
-%package theme-Nebulous
-Summary:	Nebulous Entrance theme
-Summary(pl.UTF-8):	Motyw Entrance Nebulous
-Group:		X11/Applications
-Requires:	%{name} = %{version}-%{release}
-Provides:	%{name}-theme
-
-%description theme-Nebulous
-Nebulous Entrance theme.
-
-%description theme-Nebulous -l pl.UTF-8
-Motyw Entrance Nebulous.
-
 %package theme-darkrock
 Summary:	Darkrock Entrance theme
 Summary(pl.UTF-8):	Motyw Entrance Darkrock
@@ -87,24 +119,11 @@ Darkrock Entrance theme.
 %description theme-darkrock -l pl.UTF-8
 Motyw Entrance Darkrock.
 
-%package theme-taillights
-Summary:	Taillights Entrance theme
-Summary(pl.UTF-8):	Motyw Entrance Taillights
-Group:		X11/Applications
-Requires:	%{name} = %{version}-%{release}
-Provides:	%{name}-theme
-
-%description theme-taillights
-Taillights Entrance theme.
-
-%description theme-taillights -l pl.UTF-8
-Motyw Entrance Taillights.
-
 %prep
 %setup -q
-# -n %{name}
 %patch0 -p1
-%patch1 -p1
+# no-no-no, find real problem
+#%patch1 -p1
 mv data/images/sessions/enlightenment{,DR17}.png
 sed 's/enlightenment.png/enlightenmentDR17.png/' \
 	-i data/images/sessions/Makefile.am
@@ -121,6 +140,8 @@ sed -n '/xsession="You should reconfigure --with-xsession"/!p' \
 %{__autoheader}
 %{__automake}
 %configure \
+	--with-pam-config=entrance \
+	--with-vt=auto \
 	--with-xsession=%{_sysconfdir}/X11/%{name}/Xsession
 %{__make}
 
@@ -136,7 +157,7 @@ install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/X11/%{name}/Xsession
 install %{SOURCE3} \
 	$RPM_BUILD_ROOT%{_sysconfdir}/X11/%{name}/generate-config
 install data/config/build_config.sh.in \
-	$RPM_BUILD_ROOT%{_sysconfdir}/X11/%{name}/
+	$RPM_BUILD_ROOT%{_sysconfdir}/X11/%{name}
 touch $RPM_BUILD_ROOT%{_var}/lib/%{name}/entrance_config.cfg
 
 %clean
@@ -158,13 +179,21 @@ if [ "$1" = "0" ]; then
 	/sbin/chkconfig --del entrance
 fi
 
+%post	libs -p /sbin/ldconfig
+%postun	libs -p /sbin/ldconfig
+
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS COPYING* README
+%doc AUTHORS COPYING ChangeLog README README.edje TODO
 %attr(754,root,root) /etc/rc.d/init.d/entrance
 %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/entrance
-%attr(755,root,root) %{_bindir}/entrance*
+%attr(755,root,root) %{_bindir}/entrance
+%attr(755,root,root) %{_bindir}/entrance_edit
+%attr(755,root,root) %{_bindir}/entrance_edit-config
+%attr(755,root,root) %{_bindir}/entrance_wrapper
 %attr(755,root,root) %{_sbindir}/entranced
+%dir %{_libdir}/%{name}
+%attr(755,root,root) %{_libdir}/%{name}/entrance_login
 %dir %{_datadir}/%{name}
 %{_datadir}/%{name}/images
 %dir %{_datadir}/%{name}/themes
@@ -176,18 +205,24 @@ fi
 %dir %{_var}/lib/%{name}
 %ghost %{_var}/lib/%{name}/entrance_config.cfg
 
+%files libs
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libentrance_edit.so.*.*.*
+
+%files devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libentrance_edit.so
+%{_libdir}/libentrance_edit.la
+%{_includedir}/Entrance_Edit.h
+
+%files static
+%defattr(644,root,root,755)
+%{_libdir}/libentrance_edit.a
+
 %files theme-default
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/themes/default.edj
 
-%files theme-Nebulous
-%defattr(644,root,root,755)
-%{_datadir}/%{name}/themes/Nebulous.edj
-
 %files theme-darkrock
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/themes/darkrock.edj
-
-%files theme-taillights
-%defattr(644,root,root,755)
-%{_datadir}/%{name}/themes/taillights.edj
