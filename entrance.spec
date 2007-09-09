@@ -24,6 +24,7 @@ BuildRequires:	evas-devel >= 0.9.9.038
 BuildRequires:	evas-loader-jpeg >= 0.9.9.038
 BuildRequires:	libtool
 BuildRequires:	pam-devel
+BuildRequires:	pkgconfig
 BuildRequires:	sed >= 4.0
 Requires(post,preun):	/sbin/chkconfig
 Requires:	%{name}-libs = %{version}-%{release}
