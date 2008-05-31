@@ -1,3 +1,9 @@
+#
+%define		ecore_ver	0.9.9.038
+%define		edje_ver	0.5.0.038
+%define		esmart_ver	0.9.0.008
+%define		evas_ver	0.9.9.038
+
 Summary:	Enlightened display manager
 Summary(pl.UTF-8):	Oświecony zarządca ekranu
 Name:		entrance
@@ -16,12 +22,12 @@ URL:		http://enlightenment.org/
 BuildRequires:	autoconf >= 2.59-9
 BuildRequires:	automake >= 1.4
 # ecore-evas ecore-file ecore-ipc ecore-config ecore-desktop
-BuildRequires:	ecore-devel >= 0.9.9.038
-BuildRequires:	edje >= 0.5.0.038
-BuildRequires:	edje-devel >= 0.5.0.038
-BuildRequires:	esmart-devel >= 0.9.0.008
-BuildRequires:	evas-devel >= 0.9.9.038
-BuildRequires:	evas-loader-jpeg >= 0.9.9.038
+BuildRequires:	ecore-devel >= %{ecore_ver}
+BuildRequires:	edje >= %{edje_ver}
+BuildRequires:	edje-devel >= %{edje_ver}
+BuildRequires:	esmart-devel >= %{esmart_ver}
+BuildRequires:	evas-devel >= %{evas_ver}
+BuildRequires:	evas-loader-jpeg >= %{evas_ver}
 BuildRequires:	libtool
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
@@ -30,9 +36,9 @@ Requires(post,preun):	/sbin/chkconfig
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	%{name}-theme
 #Requires:	/bin/bash
-Requires:	ecore >= 0.9.9.038
-Requires:	evas-engine-software_x11 >= 0.9.9.038
-Requires:	evas-loader-eet >= 0.9.9.038
+Requires:	ecore >= %{ecore_ver}
+Requires:	evas-engine-software_x11 >= %{evas_ver}
+Requires:	evas-loader-eet >= %{evas_ver}
 Requires:	pam
 Requires:	sessreg
 Requires:	xinitrc-ng
@@ -56,11 +62,11 @@ jakich KDM czy GDM mogą tylko pomarzyć... i to bez narzutu.
 Summary:	Entrance library
 Summary(pl.UTF-8):	Biblioteka Entrance
 Group:		X11/Libraries
-Requires:	ecore-config >= 0.9.9.038
-Requires:	ecore-desktop >= 0.9.9.038
-Requires:	ecore-evas >= 0.9.9.038
-Requires:	ecore-file >= 0.9.9.038
-Requires:	ecore-ipc >= 0.9.9.038
+Requires:	ecore-config >= %{ecore_ver}
+Requires:	ecore-desktop >= %{ecore_ver}
+Requires:	ecore-evas >= %{ecore_ver}
+Requires:	ecore-file >= %{ecore_ver}
+Requires:	ecore-ipc >= %{ecore_ver}
 
 %description libs
 Entrance library.
@@ -74,7 +80,7 @@ Summary(pl.UTF-8):	Plik nagłówkowy biblioteki Entrance
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 # ecore-evas ecore-file ecore-ipc ecore-config ecore-desktop
-Requires:	ecore-devel >= 0.9.9.038
+Requires:	ecore-devel >= %{ecore_ver}
 
 %description devel
 Header file for Entrance library.
