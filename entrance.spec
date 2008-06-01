@@ -1,23 +1,28 @@
 #
-%define		ecore_ver	0.9.9.038
-%define		edje_ver	0.5.0.038
-%define		esmart_ver	0.9.0.008
-%define		evas_ver	0.9.9.038
+# TODO:
+# - move to entrace.spec on CVS
+
+%define		ecore_ver	0.9.9.043
+%define		edje_ver	0.9.9.043
+%define		esmart_ver	0.9.0.042
+%define		evas_ver	0.9.9.043
+
+%define		src_name	entrance
 
 Summary:	Enlightened display manager
 Summary(pl.UTF-8):	Oświecony zarządca ekranu
-Name:		entrance
-Version:	0.9.0.009
+Name:		entrace
+Version:	0.9.9.042
 Release:	1
 License:	BSD
 Group:		X11/Applications
-Source0:	http://enlightenment.freedesktop.org/files/%{name}-%{version}.tar.gz
-# Source0-md5:	0e3f4d6830431ab7ea4e862c3585fbd0
-Source1:	%{name}.init
-Source2:	%{name}.Xsession
-Source3:	%{name}.gen-conf
-Patch0:		%{name}-conf.in.patch
-Patch1:		%{name}-use_bash.patch
+Source0:	http://download.enlightenment.org/snapshots/2008-01-25/%{name}-%{version}.tar.bz2
+# Source0-md5:	ad11d899f6bb06641d1eec72651a0e3d
+Source1:	%{src_name}.init
+Source2:	%{src_name}.Xsession
+Source3:	%{src_name}.gen-conf
+Patch0:		%{src_name}-conf.in.patch
+Patch1:		%{src_name}-use_bash.patch
 URL:		http://enlightenment.org/
 BuildRequires:	autoconf >= 2.59-9
 BuildRequires:	automake >= 1.4
@@ -214,7 +219,7 @@ fi
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libentrance_edit.so.*.*.*
+%attr(755,root,root) %{_libdir}/libentrance_edit.so.*
 
 %files devel
 %defattr(644,root,root,755)
