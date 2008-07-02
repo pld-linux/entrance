@@ -1,28 +1,24 @@
 #
-# TODO:
-# - move to entrace.spec on CVS
 
 %define		ecore_ver	0.9.9.043
 %define		edje_ver	0.9.9.043
 %define		esmart_ver	0.9.0.042
 %define		evas_ver	0.9.9.043
 
-%define		src_name	entrance
-
 Summary:	Enlightened display manager
 Summary(pl.UTF-8):	Oświecony zarządca ekranu
-Name:		entrace
+Name:		entrance
 Version:	0.9.9.042
 Release:	1
 License:	BSD
 Group:		X11/Applications
-Source0:	http://download.enlightenment.org/snapshots/2008-01-25/%{name}-%{version}.tar.bz2
+Source0:	http://download.enlightenment.org/snapshots/2008-01-25/entrace-%{version}.tar.bz2
 # Source0-md5:	ad11d899f6bb06641d1eec72651a0e3d
-Source1:	%{src_name}.init
-Source2:	%{src_name}.Xsession
-Source3:	%{src_name}.gen-conf
-Patch0:		%{src_name}-conf.in.patch
-Patch1:		%{src_name}-use_bash.patch
+Source1:	%{name}.init
+Source2:	%{name}.Xsession
+Source3:	%{name}.gen-conf
+Patch0:		%{name}-conf.in.patch
+Patch1:		%{name}-use_bash.patch
 URL:		http://enlightenment.org/
 BuildRequires:	autoconf >= 2.59-9
 BuildRequires:	automake >= 1.4
@@ -132,7 +128,7 @@ Darkrock Entrance theme.
 Motyw Entrance Darkrock.
 
 %prep
-%setup -q
+%setup -q -n entrace-%{version}
 %patch0 -p1
 # no-no-no, find real problem
 #%patch1 -p1
@@ -143,6 +139,10 @@ sed 's/enlightenment.png/enlightenmentDR17.png/' \
 sed '/PACKAGE_CFG_DIR/s@"${sysconfdir}"@"${localstatedir}/lib/${PACKAGE}"@' \
 	-i configure.in
 sed -n '/xsession="You should reconfigure --with-xsession"/!p' \
+	-i configure.in
+
+#just for this release - updated in upstream
+sed 's/AC_INIT(entrace,/AC_INIT(entrance,/' \
 	-i configure.in
 
 %build
@@ -178,9 +178,9 @@ rm -rf $RPM_BUILD_ROOT
 %post
 /sbin/chkconfig --add entrance
 if [ -f /var/lock/subsys/entrance ]; then
-	echo "Run \"/etc/rc.d/init.d/entrance restart\" to restart entrance." >&2
+	echo "Run \"service entrance restart\" to restart entrance." >&2
 else
-	echo "Run \"/etc/rc.d/init.d/entrance start\" to start entrance." >&2
+	echo "Run \"service entrance start\" to start entrance." >&2
 fi
 
 %preun
