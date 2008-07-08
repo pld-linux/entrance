@@ -1,7 +1,6 @@
-#
-
 %define		ecore_ver	0.9.9.043
 %define		edje_ver	0.9.9.043
+%define		efreet_ver	0.0.3.004
 %define		esmart_ver	0.9.0.042
 %define		evas_ver	0.9.9.043
 
@@ -21,11 +20,13 @@ Patch0:		%{name}-conf.in.patch
 Patch1:		%{name}-use_bash.patch
 URL:		http://enlightenment.org/
 BuildRequires:	autoconf >= 2.59-9
-BuildRequires:	automake >= 1.4
-# ecore-evas ecore-file ecore-ipc ecore-config ecore-desktop
+BuildRequires:	automake >= 1.6
+# ecore ecore-evas ecore-file ecore-ipc ecore-config
 BuildRequires:	ecore-devel >= %{ecore_ver}
 BuildRequires:	edje >= %{edje_ver}
 BuildRequires:	edje-devel >= %{edje_ver}
+BuildRequires:	efreet-devel >= %{efreet_ver}
+# esmart_container esmart_text_entry
 BuildRequires:	esmart-devel >= %{esmart_ver}
 BuildRequires:	evas-devel >= %{evas_ver}
 BuildRequires:	evas-loader-jpeg >= %{evas_ver}
@@ -38,6 +39,7 @@ Requires:	%{name}-libs = %{version}-%{release}
 Requires:	%{name}-theme
 #Requires:	/bin/bash
 Requires:	ecore >= %{ecore_ver}
+Requires:	efreet >= %{efreet_ver}
 Requires:	evas-engine-software_x11 >= %{evas_ver}
 Requires:	evas-loader-eet >= %{evas_ver}
 Requires:	pam
@@ -219,7 +221,8 @@ fi
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libentrance_edit.so.*
+%attr(755,root,root) %{_libdir}/libentrance_edit.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libentrance_edit.so.0
 
 %files devel
 %defattr(644,root,root,755)
