@@ -1,23 +1,22 @@
-%define		ecore_ver	0.9.9.043
-%define		edje_ver	0.9.9.043
-%define		efreet_ver	0.0.3.004
-%define		esmart_ver	0.9.0.042
-%define		evas_ver	0.9.9.043
+%define		ecore_ver	0.9.9.044
+%define		edje_ver	0.9.9.044
+%define		efreet_ver	0.0.3.005
+%define		esmart_ver	0.9.0.043
+%define		evas_ver	0.9.9.044
+
+%define		_snap	20080823
 
 Summary:	Enlightened display manager
 Summary(pl.UTF-8):	Oświecony zarządca ekranu
 Name:		entrance
-Version:	0.9.9.042
-Release:	1
+Version:	0.9.9.043
+Release:	0.%{_snap}.1
 License:	BSD
 Group:		X11/Applications
-Source0:	http://download.enlightenment.org/snapshots/2008-01-25/entrace-%{version}.tar.bz2
-# Source0-md5:	ad11d899f6bb06641d1eec72651a0e3d
+Source0:	%{name}-%{version}-%{_snap}.tar.bz2
+# Source0-md5:	8c33ec9d4890dab98ad620333cedff1a
 Source1:	%{name}.init
 Source2:	%{name}.Xsession
-Source3:	%{name}.gen-conf
-Patch0:		%{name}-conf.in.patch
-Patch1:		%{name}-use_bash.patch
 URL:		http://enlightenment.org/
 BuildRequires:	autoconf >= 2.59-9
 BuildRequires:	automake >= 1.6
@@ -130,22 +129,7 @@ Darkrock Entrance theme.
 Motyw Entrance Darkrock.
 
 %prep
-%setup -q -n entrace-%{version}
-%patch0 -p1
-# no-no-no, find real problem
-#%patch1 -p1
-mv data/images/sessions/enlightenment{,DR17}.png
-sed 's/enlightenment.png/enlightenmentDR17.png/' \
-	-i data/images/sessions/Makefile.am
-
-sed '/PACKAGE_CFG_DIR/s@"${sysconfdir}"@"${localstatedir}/lib/${PACKAGE}"@' \
-	-i configure.in
-sed -n '/xsession="You should reconfigure --with-xsession"/!p' \
-	-i configure.in
-
-#just for this release - updated in upstream
-sed 's/AC_INIT(entrace,/AC_INIT(entrance,/' \
-	-i configure.in
+%setup -q -n %{name}-%{version}-%{_snap}
 
 %build
 %{__libtoolize}
@@ -155,8 +139,9 @@ sed 's/AC_INIT(entrace,/AC_INIT(entrance,/' \
 %{__automake}
 %configure \
 	--with-pam-config=entrance \
-	--with-vt=auto \
-	--with-xsession=%{_sysconfdir}/X11/%{name}/Xsession
+	--with-vt=9 \
+	--with-xsession=%{_datadir}/%{name}/Xsession \
+	--with-xbin=%{_bindir}
 %{__make}
 
 %install
@@ -165,14 +150,12 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT{%{_sysconfdir}/X11/%{name},/etc/rc.d/init.d,%{_var}/lib/%{name}}
+install -d $RPM_BUILD_ROOT{%{_datadir}/%{name},/etc/rc.d/init.d}
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/entrance
-install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/X11/%{name}/Xsession
-install %{SOURCE3} \
-	$RPM_BUILD_ROOT%{_sysconfdir}/X11/%{name}/generate-config
-install data/config/build_config.sh.in \
-	$RPM_BUILD_ROOT%{_sysconfdir}/X11/%{name}
-touch $RPM_BUILD_ROOT%{_var}/lib/%{name}/entrance_config.cfg
+install %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/entrance/Xsession
+install data/config/build_config.sh $RPM_BUILD_ROOT%{_datadir}/%{name}
+sed -e 's|./entrance_config.cfg|%{_sysconfdir}/entrance_config.cfg|g' -i $RPM_BUILD_ROOT%{_datadir}/%{name}/build_config.sh
+install data/config/entrance_config.cfg $RPM_BUILD_ROOT/%{_sysconfdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -212,12 +195,9 @@ fi
 %{_datadir}/%{name}/images
 %dir %{_datadir}/%{name}/themes
 %{_datadir}/%{name}/users
-%dir %{_sysconfdir}/X11/%{name}
-%attr(755,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/X11/%{name}/Xsession
-%attr(755,root,root) %{_sysconfdir}/X11/%{name}/generate-config
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/X11/%{name}/build_config.sh.in
-%dir %{_var}/lib/%{name}
-%ghost %{_var}/lib/%{name}/entrance_config.cfg
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/entrance_config.cfg
+%attr(755,root,root) %{_datadir}/%{name}/build_config.sh
+%attr(755,root,root) %{_datadir}/%{name}/Xsession
 
 %files libs
 %defattr(644,root,root,755)
