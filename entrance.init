@@ -26,7 +26,7 @@ case "$1" in
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/entrance ]; then
 		msg_starting "Enlightened Display Manager"
-		/usr/share/entrance/build_config.cfg > /dev/null
+		/usr/share/entrance/build_config.sh > /dev/null
 		if [ -r /etc/entrance_config.cfg ]; then
 			daemon /usr/sbin/entranced
 			RETVAL=$?
